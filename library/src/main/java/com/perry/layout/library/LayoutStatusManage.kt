@@ -5,9 +5,11 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 
-class LayoutStatusManage(builder: Builder) {
+class LayoutStatusManage(private val contentLayout: View) {
 
-    private var contentLayout: View
+    companion object {
+        var config: Config? = null
+    }
 
     private var inflater: LayoutInflater
 
@@ -33,20 +35,20 @@ class LayoutStatusManage(builder: Builder) {
 
 
     init {
-        contentLayout = builder.contentLayout
+        contentLayout = config.contentLayout
         inflater = LayoutInflater.from(contentLayout.context)
 
-        emptyLayout = builder.emptyLayout
-        emptyLayoutId = builder.emptyLayoutId
+        emptyLayout = config.emptyLayout
+        emptyLayoutId = config.emptyLayoutId
 
-        emptyClickId = builder.emptyClickId
+        emptyClickId = config.emptyClickId
 
-        errorLayout = builder.errorLayout
-        errorLayoutId = builder.errorLayoutId
-        errorClickId = builder.errorClickId
+        errorLayout = config.errorLayout
+        errorLayoutId = config.errorLayoutId
+        errorClickId = config.errorClickId
 
-        loadingLayout = builder.loadingLayout
-        loadingLayoutId = builder.loadingLayoutId
+        loadingLayout = config.loadingLayout
+        loadingLayoutId = config.loadingLayoutId
     }
 
     private fun inflate(@LayoutRes layoutIdRes: Int): View {
@@ -75,24 +77,5 @@ class LayoutStatusManage(builder: Builder) {
 
     }
 
-    class Builder(val contentLayout: View) {
 
-        var emptyLayout: View? = null
-        @LayoutRes
-        var emptyLayoutId: Int = R.layout.layout_loading
-        @IdRes
-        var emptyClickId: Int? = null
-
-        var errorLayout: View? = null
-        @LayoutRes
-        var errorLayoutId: Int = R.layout.layout_loading
-        @IdRes
-        var errorClickId: Int? = null
-
-        var loadingLayout: View? = null
-        @LayoutRes
-        var loadingLayoutId: Int = R.layout.layout_loading
-
-        fun build() : LayoutStatusManage = LayoutStatusManage(this)
-    }
 }
