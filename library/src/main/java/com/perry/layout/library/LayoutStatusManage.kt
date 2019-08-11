@@ -8,54 +8,66 @@ import androidx.annotation.LayoutRes
 class LayoutStatusManage(private val contentLayout: View) {
 
     companion object {
-        var config: Config? = null
+        lateinit var config: Config
     }
 
-    private var inflater: LayoutInflater
-
-    private var emptyLayout: View?
-        get() = if (field == null) inflate(emptyLayoutId) else field
+    private var emptyLayout: View
 
     @LayoutRes
     private var emptyLayoutId: Int
-    @IdRes
-    private var emptyClickId: Int? = null
 
-    private var errorLayout: View? = null
-    @LayoutRes
-    private var errorLayoutId: Int = R.layout.layout_loading
     @IdRes
-    private var errorClickId: Int? = null
+    private var emptyClickId: Int?
 
-    private var loadingLayout: View? = null
-        get() = if (field == null) inflate(loadingLayoutId) else field
+    private var errorLayout: View
 
     @LayoutRes
-    var loadingLayoutId: Int = R.layout.layout_loading
+    private var errorLayoutId: Int
 
+    @IdRes
+    private var errorClickId: Int?
+
+    private var loadingLayout: View
+
+    @LayoutRes
+    var loadingLayoutId: Int
 
     init {
-        contentLayout = config.contentLayout
-        inflater = LayoutInflater.from(contentLayout.context)
-
-        emptyLayout = config.emptyLayout
         emptyLayoutId = config.emptyLayoutId
-
         emptyClickId = config.emptyClickId
+        emptyLayout = inflate(emptyLayoutId)
 
-        errorLayout = config.errorLayout
         errorLayoutId = config.errorLayoutId
         errorClickId = config.errorClickId
+        errorLayout = inflate(errorLayoutId)
 
-        loadingLayout = config.loadingLayout
         loadingLayoutId = config.loadingLayoutId
+        loadingLayout = inflate(loadingLayoutId)
     }
 
-    private fun inflate(@LayoutRes layoutIdRes: Int): View {
-        inflater = LayoutInflater.from(contentLayout.context)
+    private fun inflate(@LayoutRes layoutIdRes: Int): View =
+            LayoutInflater.from(contentLayout.context).inflate(layoutIdRes, null)
 
-        return inflater.inflate(layoutIdRes, null)
+    fun setEmptyLayout(@LayoutRes layoutId: Int, @IdRes  clickIds: Int? = null): LayoutStatusManage {
+        emptyLayoutId = layoutId
+        emptyClickId = clickIds
+        emptyLayout = inflate(emptyLayoutId)
+        return this@LayoutStatusManage
     }
+
+    fun setErrorLayout(@LayoutRes layoutId: Int, @IdRes  clickId: Int? = null): LayoutStatusManage {
+        errorLayoutId = layoutId
+        errorClickId = clickId
+        errorLayout = inflate(errorLayoutId)
+        return this@LayoutStatusManage
+    }
+
+    fun setLoadingLayout(@LayoutRes layoutId: Int): LayoutStatusManage {
+        loadingLayoutId = layoutId
+        loadingLayout = inflate(loadingLayoutId)
+        return this@LayoutStatusManage
+    }
+
 
     fun showContentLayout() {
 
@@ -77,5 +89,8 @@ class LayoutStatusManage(private val contentLayout: View) {
 
     }
 
+    fun setClickListener() {
+
+    }
 
 }
