@@ -11,7 +11,16 @@ class LayoutStatusManage(private val contentLayout: View) {
         lateinit var config: Config
     }
 
-    private var emptyLayout: View
+    var emptyLayout: View
+        private set
+
+    var errorLayout: View
+        private set
+
+    var loadingLayout: View
+        private set
+
+    var onClickListener: StatusLayoutClickListener? = null
 
     @LayoutRes
     private var emptyLayoutId: Int
@@ -19,18 +28,16 @@ class LayoutStatusManage(private val contentLayout: View) {
     @IdRes
     private var emptyClickId: Int?
 
-    private var errorLayout: View
-
     @LayoutRes
     private var errorLayoutId: Int
 
     @IdRes
     private var errorClickId: Int?
 
-    private var loadingLayout: View
-
     @LayoutRes
-    var loadingLayoutId: Int
+    private var loadingLayoutId: Int
+
+    private var helper: SwitchLayoutHelper
 
     init {
         emptyLayoutId = config.emptyLayoutId
@@ -43,22 +50,41 @@ class LayoutStatusManage(private val contentLayout: View) {
 
         loadingLayoutId = config.loadingLayoutId
         loadingLayout = inflate(loadingLayoutId)
+
+        setEmptyClickEvent()
+        setErrorClickEvent()
+
+        helper = SwitchLayoutHelper(contentLayout)
     }
 
     private fun inflate(@LayoutRes layoutIdRes: Int): View =
-            LayoutInflater.from(contentLayout.context).inflate(layoutIdRes, null)
+        LayoutInflater.from(contentLayout.context).inflate(layoutIdRes, null)
 
-    fun setEmptyLayout(@LayoutRes layoutId: Int, @IdRes  clickIds: Int? = null): LayoutStatusManage {
+    private fun setEmptyClickEvent() {
+        emptyClickId?.let {
+            emptyLayout.findViewById<View>(it)?.setOnClickListener { view -> onClickListener?.emptyClick(view) }
+        }
+    }
+
+    private fun setErrorClickEvent() {
+        errorClickId?.let {
+            errorLayout.findViewById<View>(it).setOnClickListener { view -> onClickListener?.errorClick(view) }
+        }
+    }
+
+    fun setEmptyLayout(@LayoutRes layoutId: Int, @IdRes clickIds: Int? = null): LayoutStatusManage {
         emptyLayoutId = layoutId
         emptyClickId = clickIds
         emptyLayout = inflate(emptyLayoutId)
+        setEmptyClickEvent()
         return this@LayoutStatusManage
     }
 
-    fun setErrorLayout(@LayoutRes layoutId: Int, @IdRes  clickId: Int? = null): LayoutStatusManage {
+    fun setErrorLayout(@LayoutRes layoutId: Int, @IdRes clickId: Int? = null): LayoutStatusManage {
         errorLayoutId = layoutId
         errorClickId = clickId
         errorLayout = inflate(errorLayoutId)
+        setErrorClickEvent()
         return this@LayoutStatusManage
     }
 
@@ -68,29 +94,27 @@ class LayoutStatusManage(private val contentLayout: View) {
         return this@LayoutStatusManage
     }
 
-
     fun showContentLayout() {
-
+        helper.switchLayout(contentLayout)
     }
 
     fun showEmptyLayout() {
-
+        helper.switchLayout(emptyLayout)
     }
 
     fun showErrorLayout() {
-
+        helper.switchLayout(errorLayout)
     }
 
     fun showLoadingLayout() {
-
+        helper.switchLayout(loadingLayout)
     }
 
     fun showCustomizeLayout(layout: View, vararg clickViewIds: Int? = emptyArray()) {
 
     }
 
-    fun setClickListener() {
+    fun showCustomizeLayout(@LayoutRes layoutId: Int, vararg clickViewIds: Int? = emptyArray()) {
 
     }
-
 }

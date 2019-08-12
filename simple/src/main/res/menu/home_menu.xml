@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/menu_item_content"
+        android:title="Content" />
+
+    <item
+        android:id="@+id/menu_item_error"
+        android:title="Error" />
+
+    <item
+        android:id="@+id/menu_item_empty"
+        android:title="Empty" />
+
+    <item
+        android:id="@+id/menu_item_loading"
+        android:title="Loading" />
+</menu>

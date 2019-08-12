@@ -1,13 +1,12 @@
 package com.perry.layout.library
 
-import android.view.View
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 
 class Config {
 
     @LayoutRes
-    var emptyLayoutId: Int = R.layout.layout_empty
+    var emptyLayoutId: Int = R.layout.layout_default_empty
         private set
 
     @IdRes
@@ -15,7 +14,7 @@ class Config {
         private set
 
     @LayoutRes
-    var errorLayoutId: Int = R.layout.layout_error
+    var errorLayoutId: Int = R.layout.layout_default_error
         private set
 
     @IdRes
@@ -23,7 +22,8 @@ class Config {
         private set
 
     @LayoutRes
-    var loadingLayoutId: Int = R.layout.layout_loading
+    var loadingLayoutId: Int = R.layout.layout_default_loading
+        private set
 
     fun setEmptyLayout(@LayoutRes layoutId: Int, @IdRes clickId: Int? = null): Config {
         emptyLayoutId = layoutId
