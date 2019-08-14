@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.perry.layout.library.LayoutStatusManage
 import com.perry.layout.library.StatusLayoutClickListener
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,11 +26,27 @@ class MainActivity : AppCompatActivity() {
         layoutStatusManage = LayoutStatusManage(tv).apply {
             onClickListener = object : StatusLayoutClickListener {
                 override fun emptyClick(view: View?) {
-                    Toast.makeText(this@MainActivity, "empty", Toast.LENGTH_SHORT).show()
+                    this@MainActivity.toast("empty")
                 }
 
                 override fun errorClick(view: View?) {
-                    Toast.makeText(this@MainActivity, "error", Toast.LENGTH_SHORT).show()
+                    this@MainActivity.toast("error")
+                }
+
+                override fun customizeClick(view: View?) {
+                    when (view?.id) {
+                        R.id.btn_1 -> {
+                            this@MainActivity.toast("1")
+                        }
+                        R.id.btn_2 -> {
+                            this@MainActivity.toast("2")
+                        }
+                        R.id.btn_3 -> {
+                            this@MainActivity.toast("3")
+                        }
+                        else -> {
+                        }
+                    }
                 }
             }
         }
@@ -53,6 +70,14 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.menu_item_loading -> {
                 layoutStatusManage.showLoadingLayout()
+            }
+            R.id.menu_item_customize -> {
+                layoutStatusManage.showCustomizeLayout(
+                    R.layout.layout_customize,
+                    R.id.btn_1,
+                    R.id.btn_2,
+                    R.id.btn_3
+                )
             }
             else -> {
             }

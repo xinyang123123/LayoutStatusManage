@@ -9,14 +9,18 @@
 
     <TextView
         android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:gravity="center"
         android:text="Hello World!" />
 
-    <View
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@id/tv"
-        android:background="@color/colorAccent" />
+        android:layout_below="@+id/tv"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Used to test placeholders"
+        android:textColor="@color/colorWhite" />
 
 </RelativeLayout>

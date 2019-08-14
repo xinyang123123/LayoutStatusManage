@@ -10,7 +10,7 @@ class Config {
         private set
 
     @IdRes
-    var emptyClickId: Int? = R.id.tv_empty
+    var emptyClickId: Int? = R.id.ll_empty
         private set
 
     @LayoutRes
@@ -18,7 +18,7 @@ class Config {
         private set
 
     @IdRes
-    var errorClickId: Int? = R.id.tv_error
+    var errorClickId: Int? = R.id.ll_error
         private set
 
     @LayoutRes

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Library</string>
+    <string name="empty_content">糟糕,这里空空如也</string>
+    <string name="error_content">出错了,请点击页面重试</string>
 </resources>

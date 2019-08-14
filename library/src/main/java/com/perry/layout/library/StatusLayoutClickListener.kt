@@ -8,4 +8,6 @@ interface StatusLayoutClickListener {
 
     fun errorClick(view: View?)
 
+    fun customizeClick(view: View?){}
+
 }

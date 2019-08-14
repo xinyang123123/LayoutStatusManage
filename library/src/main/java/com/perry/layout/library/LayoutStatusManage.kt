@@ -58,7 +58,7 @@ class LayoutStatusManage(private val contentLayout: View) {
     }
 
     private fun inflate(@LayoutRes layoutIdRes: Int): View =
-        LayoutInflater.from(contentLayout.context).inflate(layoutIdRes, null)
+            LayoutInflater.from(contentLayout.context).inflate(layoutIdRes, null)
 
     private fun setEmptyClickEvent() {
         emptyClickId?.let {
@@ -68,7 +68,7 @@ class LayoutStatusManage(private val contentLayout: View) {
 
     private fun setErrorClickEvent() {
         errorClickId?.let {
-            errorLayout.findViewById<View>(it).setOnClickListener { view -> onClickListener?.errorClick(view) }
+            errorLayout.findViewById<View>(it)?.setOnClickListener { view -> onClickListener?.errorClick(view) }
         }
     }
 
@@ -95,26 +95,38 @@ class LayoutStatusManage(private val contentLayout: View) {
     }
 
     fun showContentLayout() {
-        helper.switchLayout(contentLayout)
+        helper.showView(contentLayout)
     }
 
     fun showEmptyLayout() {
-        helper.switchLayout(emptyLayout)
+        helper.showView(emptyLayout)
     }
 
     fun showErrorLayout() {
-        helper.switchLayout(errorLayout)
+        helper.showView(errorLayout)
     }
 
     fun showLoadingLayout() {
-        helper.switchLayout(loadingLayout)
+        helper.showView(loadingLayout)
     }
 
-    fun showCustomizeLayout(layout: View, vararg clickViewIds: Int? = emptyArray()) {
-
+    fun showCustomizeLayout(view: View, vararg clickViewIds: Int? = emptyArray()) {
+        setCustomizeClickEvent(view, *clickViewIds)
+        helper.showView(view)
     }
 
     fun showCustomizeLayout(@LayoutRes layoutId: Int, vararg clickViewIds: Int? = emptyArray()) {
+        inflate(layoutId).let {
+            setCustomizeClickEvent(it, *clickViewIds)
+            helper.showView(it)
+        }
+    }
 
+    private fun setCustomizeClickEvent(view: View, vararg clickViewIds: Int?) {
+        clickViewIds.forEach {
+            it?.let {
+                view.findViewById<View>(it)?.setOnClickListener { view -> onClickListener?.customizeClick(view) }
+            }
+        }
     }
 }

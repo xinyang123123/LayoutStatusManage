@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Library</string>
+    <string name="empty_content">Oops, it’s empty here.</string>
+    <string name="error_content">There was an error, please click to try again</string>
+</resources>
