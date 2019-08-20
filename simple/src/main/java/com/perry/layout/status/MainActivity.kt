@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import com.perry.layout.library.LayoutStatusManage
 import com.perry.layout.library.StatusLayoutClickListener
 import kotlinx.android.synthetic.main.activity_main.*

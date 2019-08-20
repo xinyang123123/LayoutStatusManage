@@ -58,19 +58,7 @@ class LayoutStatusManage(private val contentLayout: View) {
     }
 
     private fun inflate(@LayoutRes layoutIdRes: Int): View =
-            LayoutInflater.from(contentLayout.context).inflate(layoutIdRes, null)
-
-    private fun setEmptyClickEvent() {
-        emptyClickId?.let {
-            emptyLayout.findViewById<View>(it)?.setOnClickListener { view -> onClickListener?.emptyClick(view) }
-        }
-    }
-
-    private fun setErrorClickEvent() {
-        errorClickId?.let {
-            errorLayout.findViewById<View>(it)?.setOnClickListener { view -> onClickListener?.errorClick(view) }
-        }
-    }
+        LayoutInflater.from(contentLayout.context).inflate(layoutIdRes, null)
 
     fun setEmptyLayout(@LayoutRes layoutId: Int, @IdRes clickIds: Int? = null): LayoutStatusManage {
         emptyLayoutId = layoutId
@@ -122,11 +110,34 @@ class LayoutStatusManage(private val contentLayout: View) {
         }
     }
 
+    fun <T : View> findContentChildView(@IdRes viewId: Int): T? = contentLayout.findViewById(viewId)
+
+    fun <T : View> findErrorChildView(@IdRes viewId: Int): T? = errorLayout.findViewById(viewId)
+
+    fun <T : View> findEmptyChildView(@IdRes viewId: Int): T? = emptyLayout.findViewById(viewId)
+
+    fun <T : View> findLoadingChildView(@IdRes viewId: Int): T? = loadingLayout.findViewById(viewId)
+
     private fun setCustomizeClickEvent(view: View, vararg clickViewIds: Int?) {
         clickViewIds.forEach {
             it?.let {
-                view.findViewById<View>(it)?.setOnClickListener { view -> onClickListener?.customizeClick(view) }
+                view.findViewById<View>(it)
+                    ?.setOnClickListener { view -> onClickListener?.customizeClick(view) }
             }
+        }
+    }
+
+    private fun setEmptyClickEvent() {
+        emptyClickId?.let {
+            emptyLayout.findViewById<View>(it)
+                ?.setOnClickListener { view -> onClickListener?.emptyClick(view) }
+        }
+    }
+
+    private fun setErrorClickEvent() {
+        errorClickId?.let {
+            errorLayout.findViewById<View>(it)
+                ?.setOnClickListener { view -> onClickListener?.errorClick(view) }
         }
     }
 }
