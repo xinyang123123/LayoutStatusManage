@@ -1,5 +1,6 @@
 package com.perry.layout.status
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.View
 import com.perry.layout.library.LayoutStatusManage
 import com.perry.layout.library.StatusLayoutClickListener
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initLayoutStatus()
+        tv_to_java.onClick { startActivity(Intent(this@MainActivity, JavaActivity::class.java)) }
     }
 
     private fun initLayoutStatus() {
